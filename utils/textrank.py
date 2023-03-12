@@ -3,6 +3,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 import networkx as nx
 import matplotlib.pyplot as plt
+import numpy as np
 
 nltk.download('punkt')
 
