@@ -18,7 +18,7 @@ def install(chapter_02: bool = False):
     cmd = ["python", "-m", "pip", "install", "-r"]
 
     if chapter_02:
-        transformers_cmd = "python -m pip install transformers==4.26.1 datasets==2.10.1 summa==1.2.0 evaluate==0.4.0".split()
+        transformers_cmd = "python -m pip install transformers==4.26.1 datasets==2.10.1 summa==1.2.0 evaluate==0.4.0 rouge_score==1.4.0".split()
         process_scatter = subprocess.run(
             transformers_cmd,
             stdout=subprocess.PIPE,
