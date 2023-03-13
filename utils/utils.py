@@ -14,7 +14,7 @@ class SummarizationMetrics:
 
         for model_name in tqdm(summaries):
             predictions = summaries[model_name]
-            if model_name != "TextRank":
+            if model_name != "TextRank (Baseline)":
                 predictions = [predictions]
             references = [reference]
             results = self.rouge.compute(predictions=predictions, references=references)
@@ -28,7 +28,7 @@ class SummarizationMetrics:
 
         for model_name in tqdm(summaries):
             predictions = summaries[model_name]
-            if model_name != "TextRank":
+            if model_name != "TextRank (Baseline)":
                 predictions = [predictions]
             references  = [[reference]]
             results = self.google_bleu.compute(predictions=predictions, references=references)
