@@ -14,6 +14,8 @@ class SummarizationMetrics:
 
         for model_name in tqdm(summaries):
             predictions = summaries[model_name]
+            if model_name != "TextRank":
+                predictions = [predictions]
             references = [reference]
             results = self.rouge.compute(predictions=predictions, references=references)
             records.append(results)
@@ -26,6 +28,8 @@ class SummarizationMetrics:
 
         for model_name in tqdm(summaries):
             predictions = summaries[model_name]
+            if model_name != "TextRank":
+                predictions = [predictions]
             references  = [[reference]]
             results = self.google_bleu.compute(predictions=predictions, references=references)
             records.append(results)
@@ -41,6 +45,7 @@ class SummarizationMetrics:
 
         return metrics_df
 
+
 def print_wrapper(print):
     """Adapted from: https://stackoverflow.com/questions/27621655/how-to-overload-print-function-to-expand-its-functionality/27621927"""
 
@@ -53,3 +58,17 @@ def print_wrapper(print):
     return function_wrapper
 
 print = print_wrapper(print)
+
+
+def print_summaries(summaries, reference):
+    print("\033[1mGround truth\033[0m")
+    print(reference)
+    print("")
+    print("====" * 17)
+    print("")
+    for model_name in summaries:
+        print("\033[1m" + model_name + "\033[0m")
+        print(summaries[model_name])
+        print("")
+        print("----" * 17)
+        print("")
