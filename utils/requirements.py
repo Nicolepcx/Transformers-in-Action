@@ -18,7 +18,7 @@ def install_base_packages():
 
 
 def install_required_packages_ch03():
-    packages = ["summa==1.2.0", "evaluate==0.4.0", "rouge_score==0.1.2"]
+    packages = ["summa==1.2.0", "evaluate==0.4.0", "rouge_score==0.1.2", "sentencepiece"]
     check = u'\u2705'
     print("\033[1mInstalling chapter 3 requirements...\n\033[0m")
     for package in packages:
