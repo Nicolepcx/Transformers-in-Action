@@ -7,6 +7,7 @@ import numpy as np
 
 nltk.download('punkt')
 
+
 class TextRank:
     """
     A class for creating a TextRank graph from a list of sentences.
@@ -30,6 +31,7 @@ class TextRank:
         Plot the TextRank graph using a circular layout and display it.
 
     """
+
     def __init__(self):
         self.sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
         self.c = CountVectorizer()
@@ -124,7 +126,11 @@ class TextRank:
         nx.draw_networkx_nodes(G, pos, node_size=700, node_color='#58A3B3')
 
         # Draw the edges
+        edge_labels = {(u, v): f"{G[u][v]['weight']:.2f}" for u, v in G.edges()}
         nx.draw_networkx_edges(G, pos, width=3, edge_color='gray')
+
+        # Draw edge labels with weights
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=12)
 
         # Draw the labels
         nx.draw_networkx_labels(G, pos, font_size=20, font_family='sans-serif', font_color='white')
