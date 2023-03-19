@@ -71,6 +71,32 @@ def compute_rouge(df, model_names):
 
     return results
 
+def compute_bleu(df, model_names):
+    """
+    Compute the ROUGE metric for each model's output against the "summary" column in the DataFrame.
+
+    Args:
+        df (pandas.DataFrame): The DataFrame containing the text and summary columns.
+        model_names (list): A list of model names to compute the ROUGE metric for.
+
+    Returns:
+        dict: A dictionary containing the ROUGE metric scores for each model.
+    """
+    # Initialize the bleu metric scorer
+    bleu= evaluate.load('google_bleu')
+
+    # Convert the summary column to a list of references
+    references = df["summary"].tolist()
+
+    # Compute the ROUGE metric for each model's output
+    results = {}
+    for model_name in model_names:
+        predictions = df[f"{model_name}_avg"].tolist()
+        scores = bleu.compute(predictions=predictions, references=references)
+        results[model_name] = scores
+
+    return results
+
 
 def print_wrapper(print):
     """Adapted from: https://stackoverflow.com/questions/27621655/how-to-overload-print-function-to-expand-its-functionality/27621927"""
