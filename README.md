@@ -32,5 +32,37 @@ All of the code is organized into folders. Each folder starts with `CH` followed
 The notebooks are then organized as follows: `ch03_text_summarization_eval.ipynb`, where `ch03` indicates the chapter
 and `text_summarization_eval` what is done in the notebook. 
 
+## Running the Notebooks
 
+Every notebook contains buttons so that the notebook can be oppend and run on the chosen cloud service like this:
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]()   [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)]()   [![Gradient](https://assets.paperspace.io/img/gradient-badge.svg)]() 
+
+Also, each notebook is connected with this Github repo, meaning by running a notebook, it will automatically clone the repo, so you can easily access all resources outside the notebook.
+Like customs functions and classes as well as utility functions to automatically install the requirements per chapter: 
+
+```
+!git clone https://github.com/Nicolepcx/Transformers-in-Action.git
+
+current_path = %pwd
+if '/Transformers-in-Action' in current_path:
+    new_path = current_path + '/utils'
+else:
+    new_path = current_path + '/Transformers-in-Action/utils'
+%cd $new_path
+```
+__NOTE:__ You need to run the notebooks with a GPU. 
+
+## Project structure
+
+```
+├── LICENSE
+├── README.md             <- The top-level README for developers using this project.
+├── CH02                  <- Per chapter folder with Jupyter notebooks.
+    ├── [name].ipynb      <- Jupyter notebooks with naming as mentioned above.
+├── CH03                  <- Per chapter folder with Jupyter notebooks.
+...                       <- Same structure for all chapters.
+├── utils                 <- Custom classes and functions and utility functions.
+├── resources             <- Some miscellaneous resources such as the logo.
+
+```
