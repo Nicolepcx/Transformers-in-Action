@@ -1,0 +1,10 @@
+All the contents and codes, Jupyter Notebooks and other materials in this Github repository related to Transformers in Action by Nicole Koenigstein and Miquel Noguer Alonso are copyrighted and only intended for personal use.
+
+Any kind of sharing, distribution, duplication, etc. without written permission by Manning Publications is prohibited.
+
+The contents, Python codes, Jupyter Notebooks and other materials come without warranties or representations, to the extent permitted by applicable law.
+
+Notice that the code provided might be work in progress and that substantial additions, changes, updates, etc. can take place in the future. It is advised to regularly check for updates.
+
+
+(c) Nicole Koenigstein, March 2023.
