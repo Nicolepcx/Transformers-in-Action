@@ -35,11 +35,11 @@ and `text_summarization_eval` what is done in the notebook.
 ## Virtual Envrionment
 
 The provided bash script `create_env.sh` automates the process of creating a Python virtual environment using either conda or pipenv, 
-installing the required packages from a requirements.txt file. To use the script run `bash create_env.sh` in your 
+installing the required packages from a `requirements.txt file`. To use the script run `bash create_env.sh` in your 
 terminal on Microsoft Windows (with WSL), Apple macOS, or Linux operating systems.
 
 <span style="color:red">
-Note: A virtual environment is not necessary for the notebooks in this repository, as they are designed to be 
+- Note: A virtual environment is not necessary for the notebooks in this repository, as they are designed to be 
 run on a cloud service with GPU support. Therefore, the provided instructions for creating a virtual environment are 
 more for reference and general guidance than a strict requirement. </span>
 
@@ -47,10 +47,13 @@ more for reference and general guidance than a strict requirement. </span>
 
 Every notebook contains buttons so that the notebook can be oppend and run on the chosen cloud service like this:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]()   [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)]()   [![Gradient](https://assets.paperspace.io/img/gradient-badge.svg)]() 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]()   [![Gradient](https://assets.paperspace.io/img/gradient-badge.svg)]() 
 
 Also, each notebook is connected with this Github repo, meaning by running a notebook, it will automatically clone the repo, so you can easily access all resources outside the notebook.
 Like customs functions and classes as well as utility functions to automatically install the requirements per chapter: 
+
+__NOTE:__ As of the currently used version of Hugging Face datasets there is an issue
+on Kaggle, which is why it is, for now, not supported for the notebooks. 
 
 ```
 !git clone https://github.com/Nicolepcx/Transformers-in-Action.git
