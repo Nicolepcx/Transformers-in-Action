@@ -39,7 +39,7 @@ installing the required packages from a `requirements.txt file`. To use the scri
 terminal on Microsoft Windows (with WSL), Apple macOS, or Linux operating systems.
 
 <span style="color:red">
-- Note: A virtual environment is not necessary for the notebooks in this repository, as they are designed to be 
+NOTE: A virtual environment is not necessary for the notebooks in this repository, as they are designed to be 
 run on a cloud service with GPU support. Therefore, the provided instructions for creating a virtual environment are 
 more for reference and general guidance than a strict requirement. </span>
 
@@ -48,12 +48,13 @@ more for reference and general guidance than a strict requirement. </span>
 Every notebook contains buttons so that the notebook can be oppend and run on the chosen cloud service like this:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]()   [![Gradient](https://assets.paperspace.io/img/gradient-badge.svg)]() 
-
-Also, each notebook is connected with this Github repo, meaning by running a notebook, it will automatically clone the repo, so you can easily access all resources outside the notebook.
-Like customs functions and classes as well as utility functions to automatically install the requirements per chapter: 
-
 __NOTE:__ As of the currently used version of Hugging Face datasets there is an issue
 on Kaggle, which is why it is, for now, not supported for the notebooks. 
+
+
+Each notebook is connected with this Github repo, meaning by running a notebook, it will automatically clone the repo, so you can easily access all resources outside the notebook.
+Like customs functions and classes as well as utility functions to automatically install the requirements per chapter: 
+
 
 ```
 !git clone https://github.com/Nicolepcx/Transformers-in-Action.git
