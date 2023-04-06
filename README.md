@@ -32,6 +32,17 @@ All of the code is organized into folders. Each folder starts with `CH` followed
 The notebooks are then organized as follows: `ch03_text_summarization_eval.ipynb`, where `ch03` indicates the chapter
 and `text_summarization_eval` what is done in the notebook. 
 
+## Virtual Envrionment
+
+The provided bash script `create_env.sh` automates the process of creating a Python virtual environment using either conda or pipenv, 
+installing the required packages from a requirements.txt file. To use the script run `bash create_env.sh` in your 
+terminal on Microsoft Windows (with WSL), Apple macOS, or Linux operating systems.
+
+<span style="color:red">
+Note: A virtual environment is not necessary for the notebooks in this repository, as they are designed to be 
+run on a cloud service with GPU support. Therefore, the provided instructions for creating a virtual environment are 
+more for reference and general guidance than a strict requirement. </span>
+
 ## Running the Notebooks
 
 Every notebook contains buttons so that the notebook can be oppend and run on the chosen cloud service like this:
