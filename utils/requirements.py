@@ -33,7 +33,7 @@ def install_required_packages_ch03():
             print(f"{check} {package} installation completed successfully!\n")
 
 def install_required_packages_ch04():
-    packages = ["transformers == 4.26.1", "datasets == 2.10.1", "evaluate==0.4.0", "sacrebleu", "pyarrow==9.0.0", "sentencepiece"]
+    packages = ["transformers == 4.26.1", "datasets == 2.10.1", "evaluate==0.4.0", "rouge_score==0.1.2", "sacrebleu", "pyarrow==9.0.0", "sentencepiece"]
 
     check = u'\u2705'
     print("\033[1mInstalling chapter 4 requirements...\n\033[0m")
