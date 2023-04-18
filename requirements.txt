@@ -12,5 +12,7 @@ nbconvert==6.5.4
 notebook==6.4.8
 scikit-learn==1.2.2
 torch==2.0.0
+torchvision==0.15.1
 tqdm==4.65.0
 matplotlib==3.7.1
+watermark==2.3.1
