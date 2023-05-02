@@ -4,6 +4,8 @@ import torch
 import evaluate
 from tqdm import tqdm
 from textwrap import TextWrapper
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
 
 class SummarizationMetrics:
     def __init__(self):
@@ -134,3 +136,124 @@ def set_seed(seed_value=42):
     torch.cuda.manual_seed_all(seed_value)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
+
+
+def create_evaluation_df_and_plot(true_labels, pred_labels, target_names, model_name):
+    conf_matrix = confusion_matrix(true_labels, pred_labels)
+    report = classification_report(true_labels, pred_labels, target_names=target_names, output_dict=True)
+
+    # Create a dictionary to store the evaluation metrics
+    evaluation_results = {
+        "Model": [model_name],
+        "Accuracy": [accuracy_score(true_labels, pred_labels)],
+        "F1 Score": [f1_score(true_labels, pred_labels, average='weighted')],
+    }
+
+    # Add F1 scores for each class to the dictionary
+    for idx, name in enumerate(target_names):
+        evaluation_results[name + " F1"] = [report[name]["f1-score"]]
+
+    # Convert the dictionary to a DataFrame
+    evaluation_df = pd.DataFrame(evaluation_results)
+    evaluation_df.set_index("Model", inplace=True)
+
+    # Print the evaluation DataFrame and classification report
+    print(evaluation_df)
+    print("Classification Report:")
+    print(classification_report(true_labels, pred_labels, target_names=target_names))
+
+    # Set up the figure for plotting
+    fig, ax = plt.subplots()
+
+    # Plot the confusion matrix
+    im = ax.imshow(conf_matrix, interpolation='nearest', cmap=plt.cm.Blues)
+    ax.set_title(f"{model_name}\nAccuracy: {evaluation_results['Accuracy'][0]:.2f}\nF1 Score: {evaluation_results['F1 Score'][0]:.2f}")
+    tick_marks = np.arange(len(target_names))
+    ax.set_xticks(tick_marks)
+    ax.set_yticks(tick_marks)
+    ax.set_xticklabels(target_names)
+    ax.set_yticklabels(target_names)
+
+    # Add x and y axis labels
+    ax.set_xlabel("Predicted Class", fontsize=18)
+    ax.set_ylabel("True Class", fontsize=18)
+
+    # Display F1 scores in the confusion matrix
+    for i in range(conf_matrix.shape[0]):
+        for j in range(conf_matrix.shape[1]):
+            text_color = "white" if conf_matrix[i, j] > conf_matrix.max() / 2 else "black"
+            ax.text(j, i, f"{conf_matrix[i, j]}\n({report[target_names[i]]['f1-score']:.2f})",
+                    ha="center", va="center", color=text_color, fontsize=12)
+
+    plt.show()
+
+    return evaluation_df
+
+
+def evaluate_model(model, tokenizer, test_set, target_names, model_name="", is_dataframe=True):
+    # Prepare the data
+    if is_dataframe:
+        test_true_labels = test_set['label'].tolist()
+        test_texts = test_set['sentence'].tolist()
+    else:
+        test_true_labels = test_set['label']
+        test_texts = test_set['text']
+
+    # Tokenize the test data
+    test_inputs = tokenizer(test_texts, return_tensors="pt", padding=True, truncation=True)
+
+    # Get predictions
+    with torch.no_grad():
+        logits = model(**test_inputs).logits
+    test_pred_labels = np.argmax(logits.numpy(), axis=1)
+
+    # Calculate evaluation metrics
+    accuracy = accuracy_score(test_true_labels, test_pred_labels)
+    f1 = f1_score(test_true_labels, test_pred_labels, average='weighted')
+    conf_matrix = confusion_matrix(test_true_labels, test_pred_labels)
+    report = classification_report(test_true_labels, test_pred_labels, target_names=target_names, output_dict=True, digits=4)
+
+    # Create a dictionary to store the evaluation metrics
+    evaluation_results = {
+        "Model": [model_name],
+        "Accuracy": [accuracy],
+        "F1 Score": [f1],
+    }
+
+    # Add F1 scores for each class to the dictionary
+    for idx, name in enumerate(target_names):
+        evaluation_results[name + " F1"] = [report[name]["f1-score"]]
+
+    # Convert the dictionary to a DataFrame
+    evaluation_df = pd.DataFrame(evaluation_results)
+    evaluation_df.set_index("Model", inplace=True)
+
+    # Print the evaluation DataFrame and classification report
+    print(evaluation_df)
+    print("Classification Report:")
+    print(classification_report(test_true_labels, test_pred_labels, target_names=target_names, digits=4))
+
+    # Plot the confusion matrix
+    fig, ax = plt.subplots()
+    im = ax.imshow(conf_matrix, interpolation='nearest', cmap=plt.cm.Blues)
+    ax.set_title(f"{model_name}\nAccuracy: {accuracy:.4f}\nF1 Score: {f1:.4f}")
+    tick_marks = np.arange(len(target_names))
+    ax.set_xticks(tick_marks)
+    ax.set_yticks(tick_marks)
+    ax.set_xticklabels(target_names)
+    ax.set_yticklabels(target_names)
+
+    # Add x and y axis labels
+    ax.set_xlabel("Predicted Class", fontsize=16)
+    ax.set_ylabel("True Class", fontsize=16)
+
+    # Display F1 scores in the confusion matrix
+    for i in range(conf_matrix.shape[0]):
+        for j in range(conf_matrix.shape[1]):
+            text_color = "white" if conf_matrix[i, j] > conf_matrix.max() / 2 else "black"
+            ax.text(j, i, f"{conf_matrix[i, j]}\n({report[target_names[i]]['f1-score']:.4f})",
+                    ha="center", va="center", color=text_color, fontsize=12)
+
+    plt.show()
+
+    return evaluation_df
