@@ -52,7 +52,7 @@ def install_required_packages_ch05():
     packages = ["transformers == 4.26.1", "datasets == 2.10.1", "evaluate==0.4.0", "pyarrow==9.0.0", "sentencepiece"]
 
     check = u'\u2705'
-    print("\033[1mInstalling chapter 4 requirements...\n\033[0m")
+    print("\033[1mInstalling chapter 5 requirements...\n\033[0m")
     for package in packages:
         process_scatter = subprocess.run(
             ["pip", "install", package],
