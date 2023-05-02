@@ -6,6 +6,8 @@ from tqdm import tqdm
 from textwrap import TextWrapper
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
 
 class SummarizationMetrics:
     def __init__(self):
@@ -257,3 +259,108 @@ def evaluate_model(model, tokenizer, test_set, target_names, model_name="", is_d
     plt.show()
 
     return evaluation_df
+
+
+class NewsClassifier:
+    def __init__(self, test_set, models, target_names, num_examples=100, seed_value=0, label_mapping=None):
+        self.set_seed(seed_value)
+        self.test_set = test_set
+        self.models = models
+        self.target_names = target_names
+        self.num_examples = num_examples
+        self.label_mapping = label_mapping or {i: i for i in range(len(target_names))}
+
+    @staticmethod
+    def set_seed(seed_value=42):
+        np.random.seed(seed_value)
+        torch.manual_seed(seed_value)
+        torch.cuda.manual_seed_all(seed_value)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+
+    def evaluate_models(self, num_columns=3, figsize=(15, 10)):
+        evaluation_results = []
+
+        num_models = len(self.models)
+        num_rows = (num_models + num_columns - 1) // num_columns
+
+        fig, axes = plt.subplots(num_rows, num_columns, figsize=figsize, sharey=True)
+        fig.subplots_adjust(wspace=0.5, hspace=0.5)
+        check = u'\u2705'
+
+        for idx, (model_name, model_checkpoint) in enumerate(self.models.items()):
+            print(f"{check} Evaluating {model_name}...")
+
+            tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+            model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint, num_labels=len(self.target_names))
+
+            test_texts = self.test_set["text"][:self.num_examples]
+            test_true_labels = [self.label_mapping[x] for x in self.test_set["label"][:self.num_examples]]
+
+            test_inputs = tokenizer(test_texts, return_tensors="pt", padding=True, truncation=True)
+            with torch.no_grad():
+                logits = model(**test_inputs).logits
+            test_pred_labels = np.argmax(logits.numpy(), axis=1)
+
+            accuracy = accuracy_score(test_true_labels, test_pred_labels)
+            f1 = f1_score(test_true_labels, test_pred_labels, average='weighted')
+            report = classification_report(test_true_labels, test_pred_labels, target_names=self.target_names, output_dict=True, digits=4)
+
+            evaluation_results.append({
+                "Model": model_name,
+                "Accuracy": accuracy,
+                "F1 Score": f1,
+            })
+
+            for i, name in enumerate(self.target_names):
+                evaluation_results[-1][name + " F1"] = report[name]["f1-score"]
+
+            ax = axes[idx // num_columns, idx % num_columns]
+            conf_matrix = confusion_matrix(test_true_labels, test_pred_labels)
+            im = ax.imshow(conf_matrix, interpolation='nearest', cmap=plt.cm.Blues)
+            ax.set_title(f"{model_name}\nAccuracy: {accuracy:.2f}\nF1 Score: {f1:.2f}")
+            tick_marks = np.arange(len(self.target_names))
+            ax.set_xticks(tick_marks)
+            ax.set_yticks(tick_marks)
+            ax.set_xticklabels(self.target_names, rotation=45, ha='right')
+            ax.set_yticklabels(self.target_names)
+
+            # Display F1 scores in the confusion matrix
+            for i in range(conf_matrix.shape[0]):
+                for j in range(conf_matrix.shape[1]):
+                    text_color = "white" if conf_matrix[i, j] > conf_matrix.max() / 2 else "black"
+                    ax.text(j, i, f"{conf_matrix[i, j]}\n({report[self.target_names[i]]['f1-score']:.2f})",
+                            ha="center", va="center", color=text_color, fontsize=8)
+
+        for idx in range(num_models, num_rows * num_columns):
+            axes[idx // num_columns, idx % num_columns].axis("off")
+
+        evaluation_df = pd.DataFrame(evaluation_results)
+        evaluation_df.set_index("Model", inplace=True)
+
+        print(evaluation_df)
+        plt.show()
+        return evaluation_df
+
+
+def reduce_dataset_size_and_split(dataset, train_fraction=0.8, val_fraction=0.1, test_fraction=0.1, seed=42):
+    assert train_fraction + val_fraction + test_fraction <= 1, "The sum of the fractions should not exceed 1."
+
+    np.random.seed(seed)
+    num_samples = len(dataset)
+    indices = np.arange(num_samples)
+    np.random.shuffle(indices)
+
+    train_size = int(train_fraction * num_samples)
+    val_size = int(val_fraction * num_samples)
+    test_size = int(test_fraction * num_samples)
+
+    train_indices = indices[:train_size]
+    val_indices = indices[train_size:train_size + val_size]
+    test_indices = indices[train_size + val_size:train_size + val_size + test_size]
+
+    train_data = dataset.select(train_indices)
+    val_data = dataset.select(val_indices)
+    test_data = dataset.select(test_indices)
+
+    return train_data, val_data, test_data

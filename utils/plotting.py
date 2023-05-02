@@ -1,11 +1,8 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-def plot_dataset_distribution(datasets, dataset_names, label_map=None):
-    assert label_map is not None, "The label_map cannot be None"
-    if label_map is None:
-        raise ValueError("label_map should be provided.")
 
+def plot_dataset_distribution(datasets, dataset_names, label_map=None):
     n = len(datasets)
     fig, axes = plt.subplots(1, n, figsize=(5 * n, 5), sharey=True)
 
@@ -13,13 +10,12 @@ def plot_dataset_distribution(datasets, dataset_names, label_map=None):
         axes = [axes]
 
     for dataset, dataset_name, ax in zip(datasets, dataset_names, axes):
-        # get the label names and their counts
-        if isinstance(dataset, pd.DataFrame):
-            label_counts = dataset["label"].map(label_map).value_counts()
-            label_names = label_counts.index.tolist()
-        else:
-            label_counts = dataset.map(lambda x: label_map[x['label']]).count_by_column("label")
-            label_names = list(label_counts.keys())
+        # Convert the dataset to a DataFrame if it's not already
+        if not isinstance(dataset, pd.DataFrame):
+            dataset = dataset.to_pandas()
+
+        label_counts = dataset["label"].map(label_map).value_counts()
+        label_names = label_counts.index.tolist()
 
         # plot the label distribution
         colors = ['#58A3B3', '#f9f7ef', 'darkgrey', 'gray', '#ddebee', 'gainsboro']
@@ -40,3 +36,4 @@ def plot_dataset_distribution(datasets, dataset_names, label_map=None):
                         ha="center", va="bottom")
 
     plt.show()
+
