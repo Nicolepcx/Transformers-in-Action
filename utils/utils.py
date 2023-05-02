@@ -7,6 +7,7 @@ from textwrap import TextWrapper
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from torch.utils.data import Dataset
 
 
 class SummarizationMetrics:
@@ -364,3 +365,31 @@ def reduce_dataset_size_and_split(dataset, train_fraction=0.8, val_fraction=0.1,
     test_data = dataset.select(test_indices)
 
     return train_data, val_data, test_data
+
+
+class TextClassificationDataset(Dataset):
+    def __init__(self, data, tokenizer, max_length):
+        self.data = data
+        self.tokenizer = tokenizer
+        self.max_length = max_length
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        text = self.data['text'][index]
+        label = self.data['label'][index]
+        encoding = self.tokenizer.encode_plus(
+            text,
+            add_special_tokens=True,
+            max_length=self.max_length,
+            padding='max_length',
+            truncation=True,
+            return_attention_mask=True,
+            return_tensors='pt'
+        )
+        return {
+            'input_ids': encoding['input_ids'].flatten(),
+            'attention_mask': encoding['attention_mask'].flatten(),
+            'labels': torch.tensor(label, dtype=torch.long)
+        }
