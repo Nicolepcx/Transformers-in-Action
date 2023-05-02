@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+import torch
 import evaluate
 from tqdm import tqdm
 from textwrap import TextWrapper
@@ -124,3 +126,11 @@ def print_summaries(summaries, reference):
         print("")
         print("----" * 17)
         print("")
+
+
+def set_seed(seed_value=42):
+    np.random.seed(seed_value)
+    torch.manual_seed(seed_value)
+    torch.cuda.manual_seed_all(seed_value)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
