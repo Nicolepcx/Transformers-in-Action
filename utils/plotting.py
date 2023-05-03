@@ -1,5 +1,7 @@
-import matplotlib.pyplot as plt
 import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+from sklearn.manifold import TSNE
 
 
 def plot_dataset_distribution(datasets, dataset_names, label_map=None):
@@ -37,3 +39,34 @@ def plot_dataset_distribution(datasets, dataset_names, label_map=None):
 
     plt.show()
 
+
+def plot_tsne_3d(nb_pipeline, test_df, test_predictions):
+    # Obtain the TF-IDF features of the test dataset
+    tfidf_vectorizer = nb_pipeline.named_steps['tfidfvectorizer']
+    X_test_tfidf = tfidf_vectorizer.transform(test_df["sentence"])
+
+    # Apply t-SNE to the test data's TF-IDF features
+    tsne = TSNE(n_components=3, random_state=42)
+    X_test_tsne = tsne.fit_transform(X_test_tfidf.toarray())
+
+    # Create a 3D scatter plot of t-SNE transformed test data with color-coded predicted labels
+    custom_cmap = ListedColormap(['black', '#58A3B3','darkgrey'])
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    scatter = ax.scatter(X_test_tsne[:, 0], X_test_tsne[:, 1], X_test_tsne[:, 2], c=test_predictions, cmap=custom_cmap, marker='o', edgecolors='k')
+
+    # Define the labels and their colors
+    labels = ['Negative', 'Neutral', 'Positive']
+    label_colors = {0: 'black', 1: '#58A3B3', 2: 'darkgrey'}
+
+    # Add the labels inside the plot
+    for label, color in label_colors.items():
+        ax.scatter([], [], [], c=color, label=labels[label])
+
+    ax.legend(title='Sentiment', loc=(0.98, 0.55))
+
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_zticks([])
+    ax.grid(False)
+    plt.show()
