@@ -262,7 +262,7 @@ def evaluate_model(model, tokenizer, test_set, target_names, model_name="", is_d
     return evaluation_df
 
 
-class NewsClassifier:
+class TextClassifier:
     def __init__(self, test_set, models, target_names, num_examples=100, seed_value=0, label_mapping=None):
         self.set_seed(seed_value)
         self.test_set = test_set
