@@ -263,6 +263,34 @@ def evaluate_model(model, tokenizer, test_set, target_names, model_name="", is_d
 
 
 class TextClassifier:
+    """
+    A class to evaluate multiple models for text classification tasks.
+
+    Attributes
+    ----------
+    test_set : DataFrame
+        The test dataset which is used for evaluating the models. It should include 'text' and 'label' columns.
+    models : dict
+        A dictionary where keys are model names and values are the model checkpoint paths.
+    target_names : list
+        A list of class names corresponding to the labels in the 'label' column of the test dataset.
+    num_examples : int, optional
+        The number of examples to use from the test set for evaluation. Default is 100.
+    seed_value : int, optional
+        The seed value for random operations in numpy and torch. Default is 0.
+    label_mapping : dict, optional
+        A dictionary mapping original labels to new ones. If not provided, default is a mapping from range(len(target_names)) to itself.
+
+    Methods
+    -------
+    set_seed(seed_value=42)
+        Sets the seed for numpy, torch, and cudnn to ensure results are reproducible.
+    evaluate_models(num_columns=3, figsize=(15, 10))
+        Evaluates all models on the test set and provides a summary of the results.
+        This includes accuracy, F1 score, and a confusion matrix for each model.
+        The results are also plotted for a visual comparison between models.
+    """
+
     def __init__(self, test_set, models, target_names, num_examples=100, seed_value=0, label_mapping=None):
         self.set_seed(seed_value)
         self.test_set = test_set
@@ -368,6 +396,28 @@ def reduce_dataset_size_and_split(dataset, train_fraction=0.8, val_fraction=0.1,
 
 
 class TextClassificationDataset(Dataset):
+    """
+    This class is designed to transform text data into a format that is suitable for training transformer-based models,
+    such as BERT. It inherits from PyTorch's Dataset class, making it compatible with PyTorch's DataLoader for efficient
+    data loading.
+
+    Attributes:
+    data : DataFrame
+    The dataset containing the text and their corresponding labels.
+    tokenizer : transformers.PreTrainedTokenizer
+    The tokenizer corresponding to the transformer model to be used.
+    It will be used to convert text into tokens that the model can understand.
+    max_length : int
+    The maximum length of the sequences. Longer sequences will be truncated, and shorter ones will be padded.
+
+    Methods:
+    len()
+    Returns the number of examples in the dataset.
+    getitem(index)
+    Transforms the text at the given index in the dataset into a format suitable for transformer models.
+    It returns a dictionary containing the input_ids, attention_mask, and the label for the given text.
+
+    """
     def __init__(self, data, tokenizer, max_length):
         self.data = data
         self.tokenizer = tokenizer
