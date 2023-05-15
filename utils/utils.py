@@ -142,6 +142,41 @@ def set_seed(seed_value=42):
 
 
 def create_evaluation_df_and_plot(true_labels, pred_labels, target_names, model_name):
+    """
+    Function to evaluate a model's predictions by calculating accuracy, F1 score, confusion matrix and then visualizing the results.
+
+    This function takes as input the true and predicted labels, the target names, and the model name. It calculates
+    the confusion matrix and classification report (which includes precision, recall, and F1 score for each class),
+    and displays them in a neatly formatted dataframe. It also creates a visual representation of the confusion matrix.
+
+    Parameters
+    ----------
+    true_labels : array-like
+        The true labels of the dataset.
+    pred_labels : array-like
+        The predicted labels as returned by the model.
+    target_names : list
+        A list of strings representing the names of the classes.
+    model_name : str
+        The name of the model being evaluated.
+
+    Returns
+    -------
+    evaluation_df : pandas DataFrame
+        A DataFrame containing the accuracy and F1 score of the model, as well as the F1 score for each individual class.
+
+    Displays
+    --------
+    - A DataFrame containing the model's accuracy, overall F1 score, and per-class F1 scores.
+    - A classification report.
+    - A heatmap of the confusion matrix.
+
+    Raises
+    ------
+    ValueError
+        If the lengths of 'true_labels' and 'pred_labels' are not equal.
+    """
+
     conf_matrix = confusion_matrix(true_labels, pred_labels)
     report = classification_report(true_labels, pred_labels, target_names=target_names, output_dict=True)
 
