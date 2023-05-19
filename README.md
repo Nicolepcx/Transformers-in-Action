@@ -15,16 +15,17 @@ The book covers:
    * Text classification
    * Text generation
 * Part 3 Transformers beyond NLP 
+   * Reinforcement learning transformers  
    * Transformers for vision tasks 
-   * Transformers for audio 
-   * Reinforcement learning transformers 
+   * Transformers for audio
    * Time series generation with transformers 
    * Transformers for image generation 
    * Multimodal models 
    * Transformers for mathematics 
 * Part 4 Advanced methods and next steps 
    * Optimize a transformer 
-   * Deploying transformer models 
+   * Deploying transformer models
+   * Ethical and responsible Transformer models
    * Where to go next 
 
 ## Instructions and Navigation
