@@ -50,18 +50,18 @@ def plot_tsne_3d(nb_pipeline, test_df, test_predictions):
     X_test_tsne = tsne.fit_transform(X_test_tfidf.toarray())
 
     # Create a 3D scatter plot of t-SNE transformed test data with color-coded predicted labels
-    custom_cmap = ListedColormap(['black', '#58A3B3','darkgrey'])
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    scatter = ax.scatter(X_test_tsne[:, 0], X_test_tsne[:, 1], X_test_tsne[:, 2], c=test_predictions, cmap=custom_cmap, marker='o', edgecolors='k')
 
-    # Define the labels and their colors
+    # Define the labels, their colors, and markers
     labels = ['Negative', 'Neutral', 'Positive']
     label_colors = {0: 'black', 1: '#58A3B3', 2: 'darkgrey'}
+    label_markers = {0: 'o', 1: '^', 2: 's'}
 
     # Add the labels inside the plot
     for label, color in label_colors.items():
-        ax.scatter([], [], [], c=color, label=labels[label])
+        mask = (test_predictions == label)
+        ax.scatter(X_test_tsne[mask, 0], X_test_tsne[mask, 1], X_test_tsne[mask, 2], c=color, label=labels[label], marker=label_markers[label], edgecolors='k')
 
     ax.legend(title='Sentiment', loc=(0.98, 0.55))
 
@@ -70,3 +70,4 @@ def plot_tsne_3d(nb_pipeline, test_df, test_predictions):
     ax.set_zticks([])
     ax.grid(False)
     plt.show()
+
