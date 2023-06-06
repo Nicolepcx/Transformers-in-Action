@@ -1,3 +1,5 @@
+⭐ If you find this repository helpful, please consider giving it a ⭐ here on GitHub (click the star button in the top right corner) 
+It's a quick way to show support for this openly available code. ⭐
 
 ![](resources/manning_publications_logo.png)
 
@@ -9,24 +11,17 @@ The book covers:
 * Part 1 Introduction to transformers 
   * The need for transformers 
   * A deeper look into transformers 
-* Part 2 Transformers for common NLP tasks 
+* Part 2 Transformers for fundamental NLP tasks 
    * Text summarization
    * Machine translation
    * Text classification
-   * Text generation
-* Part 3 Transformers beyond NLP 
-   * Reinforcement learning transformers  
-   * Transformers for vision tasks 
-   * Transformers for audio
-   * Time series generation with transformers 
-   * Transformers for image generation 
+* Part 3 Advanced models and methods 
+   * Text generation  
+   * Prompting and zero to few shot learning  
    * Multimodal models 
-   * Transformers for mathematics 
-* Part 4 Advanced methods and next steps 
-   * Optimize a transformer 
-   * Deploying transformer models
-   * Ethical and responsible Transformer models
-   * Where to go next 
+   * Optimize and evaluate large language models
+   * Ethical and responsible Tlarge language models
+ 
 
 ## Instructions and Navigation
 All of the code is organized into folders. Each folder starts with `CH` followed by the chapter number. For example, CH03.
