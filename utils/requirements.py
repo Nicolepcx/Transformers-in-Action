@@ -115,7 +115,7 @@ def install_required_packages_ch08():
 def install_required_packages_ch09():
     packages = ["accelerate==0.26.1", "safetensors==0.4.1",
                  "transformers == 4.38.2", "datasets==2.10.1",
-                "torch>=1.10.0", "ray==2.9.3", "wandb"]
+                "torch>=1.10.0", "ray==2.9.3", "wandb", "bitsandbytes==0.43.0"]
 
     check = u'\u2705'
     print("\033[1mInstalling chapter 9 requirements...\n\033[0m")
