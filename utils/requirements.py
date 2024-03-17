@@ -136,7 +136,7 @@ def install_required_packages_ch10():
                  "transformers == 4.38.2", "bitsandbytes==0.43.0", "llm-guard==0.3.10"]
 
     check = u'\u2705'
-    print("\033[1mInstalling chapter 9 requirements...\n\033[0m")
+    print("\033[1mInstalling chapter 10 requirements...\n\033[0m")
     for package in packages:
         process_scatter = subprocess.run(
             ["pip", "install", package],
