@@ -1,0 +1,35 @@
+# CH02
+pandas==2.2.2
+numpy==1.26.4
+nltk==3.8.1
+sklearn-pandas==2.2.0
+networkx==3.3
+Cython==3.0.10
+ipywidgets==8.1.2
+ipykernel==6.29.4
+ipython==8.24.0
+nbclient==0.10.0
+nbconvert==7.16.4
+notebook==7.2.0
+scikit-learn==1.5.0
+torch==2.2.0
+torchvision==0.17.0
+torchtext==0.17.0
+tqdm==4.66.4
+matplotlib==3.9.0
+watermark==2.4.3
+spacy==3.7.4
+
+# CH03
+requirements_parser==0.9.0
+tensorflow==2.15.0
+keras==2.15.0
+tensorflow_gcs_config==2.15.0
+tensorflow_probability==0.24.0
+transformers==4.41.1
+datasets==2.19.1
+summa==1.2.0
+evaluate==0.4.2
+rouge_score==0.1.2
+pyarrow==16.1.0
+sentencepiece==0.2.0
