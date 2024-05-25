@@ -1,6 +1,6 @@
 # CH02
-pandas==2.2.2
-numpy==1.26.4
+pandas==2.0.3
+numpy==1.24.3
 nltk==3.8.1
 sklearn-pandas==2.2.0
 networkx==3.3
@@ -15,7 +15,7 @@ scikit-learn==1.5.0
 torch==2.2.0
 torchvision==0.17.0
 torchtext==0.17.0
-tqdm==4.66.4
+tqdm==4.65.0
 matplotlib==3.9.0
 watermark==2.4.3
 spacy==3.7.4
@@ -34,3 +34,25 @@ evaluate==0.4.2
 rouge_score==0.1.2
 pyarrow==16.1.0
 sentencepiece==0.2.0
+
+# CH04
+sacrebleu==2.4.2
+
+# CH07
+accelerate==0.30.0
+wandb==0.17.0
+peft==0.11.1
+safetensors==0.4.3
+trl==0.8.6
+tree-of-thoughts-llm==0.1.0
+
+# CH08
+bitsandbytes==0.43.1
+gradio==4.20.0
+
+# CH09
+ray==2.23.0
+
+# CH10
+captum==0.7.0
+#llm-guard==0.3.10
