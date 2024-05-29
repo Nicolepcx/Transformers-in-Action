@@ -1,6 +1,6 @@
 # CH02
-pandas==2.0.3
-numpy==1.24.3
+pandas==2.2.2
+numpy==1.26.4
 nltk==3.8.1
 sklearn-pandas==2.2.0
 networkx==3.3
@@ -12,9 +12,9 @@ nbclient==0.10.0
 nbconvert==7.16.4
 notebook==7.2.0
 scikit-learn==1.5.0
-torch==2.2.0
-torchvision==0.17.0
-torchtext==0.17.0
+torch==2.3.0
+torchvision==0.18.0
+torchtext==0.18.0
 tqdm==4.65.0
 matplotlib==3.9.0
 watermark==2.4.3
@@ -23,8 +23,8 @@ torchviz==0.0.2
 
 # CH03
 requirements_parser==0.9.0
-tensorflow==2.15.0
-keras==2.15.0
+tensorflow==2.16.1
+keras==3.3.3
 tensorflow_gcs_config==2.15.0
 tensorflow_probability==0.24.0
 transformers==4.41.1
@@ -44,7 +44,7 @@ wandb==0.17.0
 peft==0.11.1
 safetensors==0.4.3
 trl==0.8.6
-tree-of-thoughts-llm==0.1.0
+#tree-of-thoughts-llm==0.1.0
 
 # CH08
 bitsandbytes==0.43.1
