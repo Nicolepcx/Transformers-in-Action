@@ -63,7 +63,7 @@ pip install -r requirements_LOCAL.txt --use-pep517
 jupyter notebook
 ~~~
 
-Then, feel free to use every notebook with the prefix 'LOCAL' appended to its name.
+Then, feel free to use every notebook with the suffix 'LOCAL' appended to its name.
 
 ## Running the Notebooks
 
