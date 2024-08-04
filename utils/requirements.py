@@ -133,7 +133,7 @@ def install_required_packages_ch09():
 
 def install_required_packages_ch10():
     packages = ["accelerate==0.26.1", "safetensors==0.4.1", "captum==0.7.0",
-                 "transformers==4.41.2", "bitsandbytes==0.43.0", "llm-guard==0.3.10"]
+                 "transformers==4.43.3", "bitsandbytes==0.43.0", "llm-guard==0.3.10"]
 
     check = u'\u2705'
     print("\033[1mInstalling chapter 10 requirements...\n\033[0m")
