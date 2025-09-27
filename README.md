@@ -38,6 +38,32 @@ terminal on Microsoft Windows (with WSL), Apple macOS, or Linux operating system
 NOTE: A virtual environment is not necessary for the notebooks in this repository, as they are designed to be 
 run on a cloud service with GPU support. Therefore, the provided instructions for creating a virtual environment are 
 more for reference and general guidance than a strict requirement. </span>
+<br />
+<br />
+
+However, if your machine is powerful enough and if you really want to create a local environment, please run the following commands from the console:
+
+~~~
+# Clones the repo in the current folder
+git clone https://github.com/Nicolepcx/Transformers-in-Action.git
+
+# Enters to the folder of the cloned project
+cd Transformers-in-Action
+
+# Creates a virtual environment
+python -m venv venv
+
+# Activates the virtual environment
+source venv/bin/activate
+
+# Installs the dependencies
+pip install -r requirements_LOCAL.txt --use-pep517
+
+# Opens a new tab in the browser to run the notebooks 
+jupyter notebook
+~~~
+
+Then, feel free to use every notebook with the suffix 'LOCAL' appended to its name.
 
 ## Running the Notebooks
 
